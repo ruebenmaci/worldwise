@@ -6,7 +6,7 @@ import {
   useCallback,
 } from "react";
 
-const BASE_URL = "http://localhost:9000";
+//const BASE_URL = "http://localhost:9000";
 
 const CitiesContext = createContext();
 
@@ -17,7 +17,72 @@ const initialState = {
   error: "",
 };
 
+const initialCities = [
+  {
+    cityName: "Lisbon",
+    country: "Portugal",
+    emoji: "🇵🇹",
+    date: "2027-10-31T15:59:59.138Z",
+    notes: "My favorite city so far!",
+    position: {
+      lat: 38.727881642324164,
+      lng: -9.140900099907554,
+    },
+    id: 73930385,
+  },
+  {
+    cityName: "Madrid",
+    country: "Spain",
+    emoji: "🇪🇸",
+    date: "2027-07-15T08:22:53.976Z",
+    notes: "",
+    position: {
+      lat: 40.46635901755316,
+      lng: -3.7133789062500004,
+    },
+    id: 17806751,
+  },
+  {
+    cityName: "Berlin",
+    country: "Germany",
+    emoji: "🇩🇪",
+    date: "2027-02-12T09:24:11.863Z",
+    notes: "Amazing 😃",
+    position: {
+      lat: 52.53586782505711,
+      lng: 13.376933665713324,
+    },
+    id: 98443197,
+  },
+  {
+    cityName: "Nijar",
+    country: "Spain",
+    emoji: "🇪🇸",
+    date: "2023-04-03T07:47:59.202Z",
+    notes: "",
+    position: {
+      lat: "36.967508314568164",
+      lng: "-2.13128394200588",
+    },
+    id: 98443198,
+  },
+  {
+    cityName: "Edmonton",
+    country: "Canada",
+    emoji: "🇨🇦",
+    date: "2024-11-09T23:41:58.374Z",
+    notes: "Not exactly Cowtown...",
+    position: {
+      lat: "53.50024194411396",
+      lng: "-113.49321941048235",
+    },
+    id: 98443199,
+  },
+];
+
 function reducer(state, action) {
+  console.log("CitiesProvider reducer(state, action");
+  console.log(state, action);
   switch (action.type) {
     case "loading":
       return { ...state, isLoading: true };
@@ -71,9 +136,9 @@ function CitiesProvider({ children }) {
       dispatch({ type: "loading" });
 
       try {
-        const res = await fetch(`${BASE_URL}/cities`);
-        const data = await res.json();
-        dispatch({ type: "cities/loaded", payload: data });
+        //const res = await fetch(`${BASE_URL}/cities`);
+        //const data = await res.json();
+        dispatch({ type: "cities/loaded", payload: initialCities });
       } catch {
         dispatch({
           type: "rejected",
@@ -91,8 +156,9 @@ function CitiesProvider({ children }) {
       dispatch({ type: "loading" });
 
       try {
-        const res = await fetch(`${BASE_URL}/cities/${id}`);
-        const data = await res.json();
+        /*const res = await fetch(`${BASE_URL}/cities/${id}`);
+        const data = await res.json();*/
+        const data = cities.filter((city) => city.id === id);
         dispatch({ type: "city/loaded", payload: data });
       } catch {
         dispatch({
@@ -101,23 +167,23 @@ function CitiesProvider({ children }) {
         });
       }
     },
-    [currentCity.id]
+    [currentCity.id, cities]
   );
 
   async function createCity(newCity) {
     dispatch({ type: "loading" });
 
     try {
-      const res = await fetch(`${BASE_URL}/cities`, {
+      /*const res = await fetch(`${BASE_URL}/cities`, {
         method: "POST",
         body: JSON.stringify(newCity),
         headers: {
           "Content-Type": "application/json",
         },
       });
-      const data = await res.json();
+      const data = await res.json();*/
 
-      dispatch({ type: "city/created", payload: data });
+      dispatch({ type: "city/created", payload: newCity });
     } catch {
       dispatch({
         type: "rejected",
@@ -130,9 +196,9 @@ function CitiesProvider({ children }) {
     dispatch({ type: "loading" });
 
     try {
-      await fetch(`${BASE_URL}/cities/${id}`, {
+      /*await fetch(`${BASE_URL}/cities/${id}`, {
         method: "DELETE",
-      });
+      });*/
 
       dispatch({ type: "city/deleted", payload: id });
     } catch {
