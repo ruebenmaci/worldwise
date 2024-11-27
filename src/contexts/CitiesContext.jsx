@@ -148,7 +148,8 @@ function CitiesProvider({ children }) {
   }, []);
 
   const getCity = useCallback(
-    async function getCity(id) {
+    /*async function getCity(id) {*/
+    function getCity(id) {
       if (Number(id) === currentCity.id) return;
 
       dispatch({ type: "loading" });
@@ -165,10 +166,11 @@ function CitiesProvider({ children }) {
         });
       }
     },
-    [currentCity.id]
+    [currentCity.id, cities]
   );
 
-  async function createCity(newCity) {
+  /*async function createCity(newCity) {*/
+  function createCity(newCity) {
     dispatch({ type: "loading" });
 
     try {
@@ -190,7 +192,8 @@ function CitiesProvider({ children }) {
     }
   }
 
-  async function deleteCity(id) {
+  /*async function deleteCity(id) {*/
+  function deleteCity(id) {
     dispatch({ type: "loading" });
 
     try {
