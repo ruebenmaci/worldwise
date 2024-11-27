@@ -81,8 +81,6 @@ const initialCities = [
 ];
 
 function reducer(state, action) {
-  console.log("CitiesProvider reducer(state, action");
-  console.log(state, action);
   switch (action.type) {
     case "loading":
       return { ...state, isLoading: true };
@@ -158,7 +156,7 @@ function CitiesProvider({ children }) {
       try {
         /*const res = await fetch(`${BASE_URL}/cities/${id}`);
         const data = await res.json();*/
-        const data = cities.filter((city) => city.id === id);
+        const data = cities.find((city) => city.id === Number(id));
         dispatch({ type: "city/loaded", payload: data });
       } catch {
         dispatch({
@@ -167,7 +165,7 @@ function CitiesProvider({ children }) {
         });
       }
     },
-    [currentCity.id, cities]
+    [currentCity.id]
   );
 
   async function createCity(newCity) {
