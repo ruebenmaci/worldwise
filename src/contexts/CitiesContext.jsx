@@ -158,6 +158,7 @@ function CitiesProvider({ children }) {
         /*const res = await fetch(`${BASE_URL}/cities/${id}`);
         const data = await res.json();*/
         const data = cities.find((city) => city.id === Number(id));
+        console.log(id);
         dispatch({ type: "city/loaded", payload: data });
       } catch {
         dispatch({
@@ -182,7 +183,7 @@ function CitiesProvider({ children }) {
         },
       });
       const data = await res.json();*/
-
+      console.log(newCity);
       dispatch({ type: "city/created", payload: newCity });
     } catch {
       dispatch({

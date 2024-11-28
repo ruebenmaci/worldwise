@@ -36,6 +36,7 @@ function Form() {
   const [notes, setNotes] = useState("");
   const [emoji, setEmoji] = useState("");
   const [geocodingError, setGeocodingError] = useState("");
+  const [id, setId] = useState("");
 
   useEffect(
     function () {
@@ -51,6 +52,10 @@ function Form() {
           );
           const data = await res.json();
           console.log(data);
+          const cityObject = data.localityInfo.administrative.find(
+            (o) => o.name === data.city
+          );
+          console.log(cityObject.geonameId);
 
           if (!data.countryCode)
             throw new Error(
@@ -60,6 +65,7 @@ function Form() {
           setCityName(data.city || data.locality || "");
           setCountry(data.countryName);
           setEmoji(convertToEmoji(data.countryCode));
+          setId(cityObject.geonameId);
         } catch (err) {
           setGeocodingError(err.message);
         } finally {
@@ -83,6 +89,7 @@ function Form() {
       date,
       notes,
       position: { lat, lng },
+      id,
     };
 
     await createCity(newCity);
