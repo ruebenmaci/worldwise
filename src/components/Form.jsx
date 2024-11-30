@@ -139,6 +139,9 @@ function Form() {
       </div>
 
       <div className={styles.buttons}>
+        {/*when the button is clicked, html automatically calls
+         the onSubmit for the form that the button is part of, this
+         is just how html works!*/}
         <Button type="primary">Add</Button>
         <BackButton />
       </div>
