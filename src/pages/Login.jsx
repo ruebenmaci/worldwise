@@ -52,6 +52,9 @@ export default function Login() {
         </div>
 
         <div>
+          {/*when the button is clicked, html automatically calls
+          the onSubmit for the form that the button is part of, this
+          is just how html works!*/}
           <Button type="primary">Login</Button>
         </div>
       </form>
