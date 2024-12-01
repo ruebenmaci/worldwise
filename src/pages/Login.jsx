@@ -21,6 +21,7 @@ export default function Login() {
 
   useEffect(
     function () {
+      // actually navigates to /app/cities
       if (isAuthenticated) navigate("/app", { replace: true });
     },
     [isAuthenticated, navigate]
